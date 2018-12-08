@@ -1,6 +1,6 @@
 <template>
   <main class="formats-page">
-    <header class="f-v-align">
+    <header class="f-v-align" ref="formatsHeader">
       <h1 class="m-right-m">Formaadid:</h1>
       <multiselect class="m-right-m"
         :options="printSizes"
@@ -8,11 +8,43 @@
         :show-labels="false"
         v-model="size"/>
 
-      <button class="btn-icon-s">
+      <button class="btn-icon-s tippy">
         <type-icon class="icon-m"/>
+
+        <div data-template>
+          <ul>
+            <li class="f-center formats-page__typo-grid">
+              <strong>H1</strong>
+              <label class="f-v-align">Size
+                <input v-model="h1Size" type="text"></label>
+              <label class="f-v-align">Weight
+                <input v-model="h1Weight" type="text"></label>
+            </li>
+            <li class="f-center formats-page__typo-grid">
+              <strong>H2</strong>
+              <label class="f-v-align">Size
+                <input v-model="h2Size" type="text"></label>
+              <label class="f-v-align">Weight
+                <input v-model="h2Weight" type="text"></label>
+            </li>
+            <li class="f-center formats-page__typo-grid">
+              <strong>H3</strong>
+              <label class="f-v-align">Size
+                <input v-model="h3Size" type="text"></label>
+              <label class="f-v-align">Weight
+                <input v-model="h3Weight" type="text"></label>
+            </li>
+            <li class="f-center formats-page__typo-grid">
+              <strong>P</strong>
+              <label class="f-v-align">Size
+                <input v-model="pSize" type="text"></label>
+              <label class="f-v-align">Weight
+                <input v-model="pWeight" type="text"></label>
+            </li>
+          </ul>
+        </div>
       </button>
-      <button class="btn-icon-s"
-        ref="tippy"
+      <button class="btn-icon-s tippy"
         :style="{ color: color }">
         <paint-bucket-icon class="icon-m"/>
 
@@ -49,9 +81,28 @@
         @dragstop="onDrag(i, ...arguments)"
         @resizestop="onResize(i, ...arguments)"
         :style="{
-          border: '2px solid #999',
+          border: '4px solid #CACACA',
           fontSize: '16px'
         }">
+
+        <div class="formats-page__block-edit">
+          <button class="btn-icon-s tippy">
+            <edit-icon class="icon-m"/>
+
+            <div data-template>
+              <select v-model="block.size">
+                <option value="H1">H1</option>
+                <option value="H2">H2</option>
+                <option value="H3">H3</option>
+                <option value="P">P</option>
+              </select>
+            </div>
+          </button>
+
+          <button class="btn-icon-s" @click="removeBlock(i)">
+            <trash-icon class="icon-m"/>
+          </button>
+        </div>
         <mi-editable
           v-model="block.text"
           class="formats-page__block"/>
@@ -63,8 +114,8 @@
 <script>
 import tippy from 'tippy.js'
 import Multiselect from 'vue-multiselect'
-import { TypeIcon } from 'vue-feather-icons'
 import VueDraggableResizable from 'vue-draggable-resizable'
+import { TypeIcon, EditIcon, TrashIcon } from 'vue-feather-icons'
 import 'tippy.js/dist/tippy.css'
 
 import MiBtn from '@/components/MiBtn'
@@ -86,7 +137,15 @@ export default {
         'A6 L',
         'A6 P'
       ],
-      blocks: []
+      blocks: [],
+      h1Size: '24pt',
+      h1Weight: '600',
+      h2Size: '18pt',
+      h2Weight: '500',
+      h3Size: '14pt',
+      h3Weight: '400',
+      pSize: '12pt',
+      pWeight: '400'
     }
   },
   props: {
@@ -97,6 +156,8 @@ export default {
     MiBtn,
     MiEditable,
     TypeIcon,
+    EditIcon,
+    TrashIcon,
     Multiselect,
     RectangleIcon,
     PaintBucketIcon,
@@ -126,45 +187,55 @@ export default {
   },
   async mounted () {
     await this.$nextTick()
-    const tooltip = this.$refs.tippy
-    tippy.one(tooltip, {
-      content: tooltip.querySelector('[data-template]'),
-      // appendTo: tooltip,
-      theme: 'light',
-      trigger: 'click',
-      interactive: true,
-      performance: true,
-      placement: 'bottom',
-      arrow: true,
-      delay: 0,
-      animation: 'shift-toward',
-      animateFill: false
-    })
+    this.initTippy()
   },
   methods: {
-    addBlock () {
+    async addBlock () {
       this.blocks.push({
         text: 'Change me',
         x: 0,
         y: 0,
         color: '#999999'
       })
+      await this.$nextTick()
+      this.initTippy()
+    },
+    removeBlock (i) {
+      this.blocks.splice(i, 1)
     },
     saveTemplate () {
       const { color, size, blocks } = this
       this.$emit('addFormat', { color, size, blocks })
     },
     onDrag (i, x, y) {
-      console.log(i, x, y)
       this.blocks[i].x = x
       this.blocks[i].y = y
     },
     onResize (i, x, y, width, height) {
-      console.log(i, x, y, width, height)
       this.blocks[i].x = x
       this.blocks[i].y = y
       this.blocks[i].width = width
       this.blocks[i].height = height
+    },
+    initTippy () {
+      const tooltips = this.$refs.formatsHeader.querySelectorAll('.tippy')
+
+      ;[].forEach.call(tooltips, tooltip => {
+        if (tooltip._tippy) return
+        tippy(tooltip, {
+          content: tooltip.querySelector('[data-template]'),
+          // appendTo: tooltip,
+          theme: 'light',
+          trigger: 'click',
+          interactive: true,
+          performance: true,
+          placement: 'bottom',
+          arrow: true,
+          delay: 0,
+          animation: 'shift-toward',
+          animateFill: false
+        })
+      })
     }
   }
 }
@@ -205,6 +276,20 @@ export default {
     height: 100%;
     justify-content: flex-end;
     align-items: flex-end;
+  }
+  &__block-edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  &__typo-grid {
+    display: grid;
+    grid-template-columns: 2rem 1fr 1fr;
+
+    input {
+      width: 4rem;
+      margin-left: .25rem;
+    }
   }
 }
 </style>
