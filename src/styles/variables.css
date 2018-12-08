@@ -1,0 +1,31 @@
+:root {
+  --text-color: var(--gray-80);
+  --highlight-purple: #475DE5;
+  --yellow: #FFC107;
+  --yellow-50: #FEE0BB;
+  --yellow-30: #FFF9EC;
+  --yellow-20: #FDBB73;
+  --red: #F25765;
+  --red-80: #F15765;
+  --light-red: #FFF2F3;
+  --white: #FFF;
+  --black: #000;
+  --gray: #16202F;
+  --gray-80: #273345;
+  --gray-70: #354052;
+  --gray-65: #6D7B91;
+  --gray-60: #8490A4;
+  --gray-55: #B9C3D4;
+  --gray-50: #E9EBF0;
+  --gray-45: #E1E6EF;
+  --gray-40: #F8F9FB;
+  --light-gray: #F2F4F8;
+  --lighter-gray: #EBEEF1;
+  --green: #6BCC74;
+  --green-20: #6ECE78;
+  --light-green: #F3FbF3;
+
+  --sidebar-width: 4.5rem;
+
+  --easing: cubic-bezier(0.86, 0, 0.07, 1);
+}

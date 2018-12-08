@@ -11,7 +11,10 @@
   "dependencies": {
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
+    "vue-feather-icons": "^4.7.1",
+    "vue-persist": "^0.4.0",
+    "vue-router": "^3.0.1",
+    "vue-svg-loader": "^0.11.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

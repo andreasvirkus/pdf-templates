@@ -1,13 +1,27 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <transition name="slide">
+      <router-view :key="$route.name"
+        :fields="fields"
+        :formats="formats"/>
+    </transition>
   </div>
 </template>
 
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {
+      formats: [],
+      fields: []
+    }
+  }
+}
+</script>
+
+<style src="@/styles/variables.css"></style>
+<style src="@/styles/global.css"></style>
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -15,15 +29,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  max-width: 50rem;
+  margin: 0 auto;
+  padding-top: 5rem;
 }
 </style>
