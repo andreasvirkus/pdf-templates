@@ -14,8 +14,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/formats',
+      path: '/formats/:id?',
       name: 'formats',
+      props: true,
       component: () => import(/* webpackChunkName: "about" */ './views/Formats.vue')
     },
     {

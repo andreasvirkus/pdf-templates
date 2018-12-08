@@ -12,11 +12,15 @@
       </header>
 
       <ul>
-        <li v-for="format in formats"
-          :key="format.id">
-          <span>{{ format.code }}</span>
-          <div class="color-block"
-            :class="'color-block--' + format.color"></div>
+        <li v-for="(format, id) in formats"
+          :key="id">
+          <router-link
+            :to="{
+              name: 'formats',
+              params: { id: id }
+            }">{{ format.size }}</router-link>
+          <div class="icon-l"
+            :style="{ backgroundColor: format.color }"></div>
         </li>
       </ul>
     </section>
@@ -53,7 +57,7 @@ export default {
   components: { PlusSquareIcon, MiBtn },
   props: {
     fields: Array,
-    formats: Array
+    formats: Object
   }
 }
 </script>
