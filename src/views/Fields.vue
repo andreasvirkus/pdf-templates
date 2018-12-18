@@ -2,10 +2,11 @@
   <div class="about">
     <header>
       <h1>Infoväljad:</h1>
-      <button>A3 L</button>
-
-      <button class="btn-icon">T</button>
-      <button class="btn-icon"></button>
+      <button>-</button>
     </header>
+
+    <main>
+      There will be a fillable table/data grid here. You just wait!
+    </main>
   </div>
 </template>

@@ -25,7 +25,6 @@ export default {
       const newFormat = {
         [`${size}-${color}`]: { color, size, blocks }
       }
-      console.log('Saving new format', newFormat)
       this.formats = Object.assign({}, this.formats, newFormat)
     }
   },

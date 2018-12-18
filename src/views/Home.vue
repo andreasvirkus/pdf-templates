@@ -11,16 +11,15 @@
         </router-link>
       </header>
 
-      <ul>
+      <ul class="overview-page__formats-list">
         <li v-for="(format, id) in formats"
-          :key="id">
-          <router-link
-            :to="{
-              name: 'formats',
-              params: { id: id }
-            }">{{ format.size }}</router-link>
-          <div class="icon-l"
-            :style="{ backgroundColor: format.color }"></div>
+          :key="id"
+          class="overview-page__format">
+          <router-link :to="{ name: 'formats', params: { id: id }}">
+            <span>{{ format.size }}</span>
+            <div class="icon-l"
+              :style="{ backgroundColor: format.color }"></div>
+          </router-link>
         </li>
       </ul>
     </section>
@@ -29,7 +28,7 @@
       <header>
         <h2>Infoväljad:</h2>
 
-        <router-link :to="{ name: 'formats' }">Sisesta väljad
+        <router-link :to="{ name: 'fields' }">Sisesta väljad
           <span class="btn-icon-s">
             <plus-square-icon class="icon-m"/>
           </span>
@@ -67,15 +66,34 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  max-width: 50rem;
+  margin: 0 auto;
 
   section {
     flex: 1;
     text-align: left;
+
+    &:nth-child(1) {
+      flex-basis: 30%;
+    }
   }
 
   footer {
     flex-basis: 100%;
     margin-top: 6rem;
+  }
+
+  a {
+    display: inline-block;
+  }
+
+  &__formats-list {
+    display: grid;
+    grid-gap: .75rem;
+  }
+
+  &__format:hover {
+    opacity: .7;
   }
 }
 </style>
