@@ -290,6 +290,7 @@ export default {
     height: 100%;
     justify-content: flex-end;
     align-items: flex-end;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
   }
   &__block-edit {
     position: absolute;
